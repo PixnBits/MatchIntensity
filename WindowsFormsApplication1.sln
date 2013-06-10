@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Match Intensity", "WindowsFormsApplication1\Match Intensity.csproj", "{24830140-0F13-4CDC-BDC2-E632DDC6EE43}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5384CE57-1F94-4D22-860D-2E9C1AC12DDF} = {5384CE57-1F94-4D22-860D-2E9C1AC12DDF}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfSharp", "..\PDFSharp-MigraDocFoundation-1_32\PDFsharp\code\PdfSharp\PdfSharp.csproj", "{5384CE57-1F94-4D22-860D-2E9C1AC12DDF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{24830140-0F13-4CDC-BDC2-E632DDC6EE43}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{24830140-0F13-4CDC-BDC2-E632DDC6EE43}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{24830140-0F13-4CDC-BDC2-E632DDC6EE43}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{24830140-0F13-4CDC-BDC2-E632DDC6EE43}.Debug|x86.ActiveCfg = Debug|x86
+		{24830140-0F13-4CDC-BDC2-E632DDC6EE43}.Debug|x86.Build.0 = Debug|x86
+		{24830140-0F13-4CDC-BDC2-E632DDC6EE43}.Release|Any CPU.ActiveCfg = Release|x86
+		{24830140-0F13-4CDC-BDC2-E632DDC6EE43}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{24830140-0F13-4CDC-BDC2-E632DDC6EE43}.Release|Mixed Platforms.Build.0 = Release|x86
+		{24830140-0F13-4CDC-BDC2-E632DDC6EE43}.Release|x86.ActiveCfg = Release|x86
+		{24830140-0F13-4CDC-BDC2-E632DDC6EE43}.Release|x86.Build.0 = Release|x86
+		{5384CE57-1F94-4D22-860D-2E9C1AC12DDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5384CE57-1F94-4D22-860D-2E9C1AC12DDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5384CE57-1F94-4D22-860D-2E9C1AC12DDF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{5384CE57-1F94-4D22-860D-2E9C1AC12DDF}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{5384CE57-1F94-4D22-860D-2E9C1AC12DDF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5384CE57-1F94-4D22-860D-2E9C1AC12DDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5384CE57-1F94-4D22-860D-2E9C1AC12DDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5384CE57-1F94-4D22-860D-2E9C1AC12DDF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{5384CE57-1F94-4D22-860D-2E9C1AC12DDF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{5384CE57-1F94-4D22-860D-2E9C1AC12DDF}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
