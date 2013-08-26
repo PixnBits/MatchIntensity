@@ -12,6 +12,9 @@ namespace WindowsFormsApplication1
 {
     public partial class frm_matchIntensity : Form
     {
+
+        private const int RALLYS_PER_ROW = 22;
+
         // TODO this should probably be in the Match class, move it
         private const int DEBUG_canEndGameAfterRallyNumber = 2;//21;
         //private DateTime formStarted;
@@ -61,48 +64,67 @@ namespace WindowsFormsApplication1
                  */
                 int curGame = this.matchData.getCurrentGameNumber();
                 int curRall = this.matchData.getCurrentRallyNumber();
+                // curRall is 1 indexed, columns are 0 indexed, but col 0 has labels
+                // so we need to decrement curRall to get 0 indexed, but increment result
+                // so we don't overwrite the row labels
+                int curRallIndex = (curRall - 1) % RALLYS_PER_ROW + 1;
 
                 TableLayoutPanel currentTable;
                 switch (curGame)
                 {
                     case 1:
                         this.gBox_game1.Visible = true;
-                        if (curRall < 31)
+                        if (curRall <= RALLYS_PER_ROW)
                         {
                             currentTable = this.tbl_game1_a;
                         }
-                        else
+                        else if (curRall <= (2 * RALLYS_PER_ROW))
                         {
                             currentTable = this.tbl_game1_b;
+                        }
+                        else
+                        {
+                            currentTable = this.tbl_game1_c;
                         }
                         break;
                     case 2:
                         this.gBox_game2.Visible = true;
                         //pnl_games.ScrollControlIntoView(this.gBox_game2);
-                        if (curRall < 31)
+                        if (curRall <= RALLYS_PER_ROW)
                         {
                             currentTable = this.tbl_game2_a;
                         }
-                        else
+                        else if (curRall <= (2 * RALLYS_PER_ROW))
                         {
                             currentTable = this.tbl_game2_b;
+                        }
+                        else
+                        {
+                            currentTable = this.tbl_game2_c;
                         }
                         break;
                     case 3:
                         this.gBox_game3.Visible = true;
                         //pnl_games.ScrollControlIntoView(this.gBox_game3);
-                        if (curRall < 31)
+                        if (curRall <= RALLYS_PER_ROW)
                         {
                             currentTable = this.tbl_game3_a;
                         }
-                        else
+                        else if (curRall <= (2 * RALLYS_PER_ROW))
                         {
                             currentTable = this.tbl_game3_b;
+                        }
+                        else
+                        {
+                            currentTable = this.tbl_game3_c;
                         }
                         break;
                     default:
                         throw new NotImplementedException();
                 }
+
+                currentTable.Visible = true;
+                currentTable.Enabled = true;
 
                 System.Windows.Forms.Control lbl_number;
                 System.Windows.Forms.Control lbl_shots;
@@ -110,16 +132,18 @@ namespace WindowsFormsApplication1
                 System.Windows.Forms.Control lbl_shotsSec;
                 System.Windows.Forms.Control lbl_secAfter;
 
-                if (curRall > 30)
-                {
-                    curRall -= 30;
-                }
+                
 
-                lbl_number = currentTable.GetControlFromPosition(curRall, 0);
-                lbl_shots = currentTable.GetControlFromPosition(curRall, 1);
-                lbl_seconds = currentTable.GetControlFromPosition(curRall, 2);
-                lbl_shotsSec = currentTable.GetControlFromPosition(curRall, 3);
-                lbl_secAfter = currentTable.GetControlFromPosition(curRall, 4);
+                Console.Write("current game ");
+                Console.WriteLine(curGame);
+                Console.Write("current rally index (in row)");
+                Console.WriteLine(curRallIndex);
+
+                lbl_number = currentTable.GetControlFromPosition(curRallIndex, 0);
+                lbl_shots = currentTable.GetControlFromPosition(curRallIndex, 1);
+                lbl_seconds = currentTable.GetControlFromPosition(curRallIndex, 2);
+                lbl_shotsSec = currentTable.GetControlFromPosition(curRallIndex, 3);
+                lbl_secAfter = currentTable.GetControlFromPosition(curRallIndex, 4);
                 
 
                 lbl_number.Visible = true;
@@ -131,6 +155,7 @@ namespace WindowsFormsApplication1
                 lbl_number.Text = "" + curRall;
 
                 this.matchData.updateRally(lbl_number, lbl_shots, lbl_seconds, lbl_shotsSec, lbl_secAfter);
+                lbl_number.Text = curRall.ToString();
 
                 this.matchData.updateMatchStats(
                         this.lbl_winner,
@@ -192,6 +217,7 @@ namespace WindowsFormsApplication1
             
             //Use to determine the Keys.* name of a Key
             //Console.WriteLine(e.KeyCode.ToString());
+            //Console.WriteLine(e.KeyCode);
             switch (e.KeyCode)
             {
                 case Keys.Z:
@@ -251,7 +277,8 @@ namespace WindowsFormsApplication1
                     this.btn_AdjustMinus_Click(this, null);
                     break;
                 default:
-                    Console.WriteLine("key not used");
+                    Console.Write(e.KeyCode.ToString());
+                    Console.WriteLine(" key not used");
                     //throw new NotImplementedException();
                     break;
             }

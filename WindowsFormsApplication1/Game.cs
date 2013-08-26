@@ -28,7 +28,13 @@ namespace WindowsFormsApplication1
             else
             {
                 this.currentRally++;
+                
                 //TODO if currentRally > array, we need to send some feedback (new Match)
+                if (this.currentRally >= this.rallies.Length)
+                {
+                    return --this.currentRally;
+                }
+
                 this.rallies[this.currentRally] = new Rally();
                 this.rallies[this.currentRally].start();
             }
@@ -179,7 +185,7 @@ namespace WindowsFormsApplication1
 
         internal long getRestTime(int index)
         {
-            if (index > this.rallies.Length)
+            if (index >= this.rallies.Length)
                 return 0;
             if (this.rallies[index + 1] == null)
                 return 0;
