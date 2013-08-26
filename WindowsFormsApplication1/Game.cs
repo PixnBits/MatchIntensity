@@ -185,7 +185,7 @@ namespace WindowsFormsApplication1
 
         internal long getRestTime(int index)
         {
-            if (index >= this.rallies.Length)
+            if ((index+1) >= this.rallies.Length)
                 return 0;
             if (this.rallies[index + 1] == null)
                 return 0;
