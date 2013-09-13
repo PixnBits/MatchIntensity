@@ -245,5 +245,15 @@ namespace WindowsFormsApplication1
             if (this.shots < 1)
                 this.shots = 1;
         }
+
+        internal void reset()
+        {
+            this.shots           = 0;
+            this.millisEnd_match = 0;
+
+            this.millisStart     = null;
+            this.millisEnd       = null;
+            this.millisPointer   = -1;
+        }
     }
 }

@@ -124,7 +124,14 @@ namespace WindowsFormsApplication1
             int totalRallies = this.getTotalRallies();
             ui_rallies.Text = "# Rallies: " + totalRallies;
             //ui_avgShotsRally
-            ui_avgShotsRally.Text = "Avg. Shots/Rally: " + (totalShots / totalRallies).ToString("0.00");
+            if (totalRallies > 0)
+            {
+                ui_avgShotsRally.Text = "Avg. Shots/Rally: " + (totalShots / totalRallies).ToString("0.00");
+            }
+            else
+            {
+                ui_avgShotsRally.Text = "Avg. Shots/Rally: undef";
+            }
             //ui_longestRally
             float[] longestRallies = this.getLongestRallies();
             ui_longestRally.Text = "Longest Rally: " + (longestRallies[0] / 1000).ToString("0.00");
@@ -382,6 +389,14 @@ namespace WindowsFormsApplication1
                 return;
 
             this.games[this.currentGame].resume();
+        }
+
+        internal void undoLastRally()
+        {
+            if(this.currentGame < 0)
+            return;
+            
+            this.games[this.currentGame].undoLastRally();
         }
     }
 }

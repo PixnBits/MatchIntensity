@@ -46,145 +46,179 @@ namespace WindowsFormsApplication1
             this.btn_pauseRally.Enabled = true;
             this.btn_AdjustMinus.Enabled = true;
             this.btn_AdjustPlus.Enabled = true;
+            this.btn_RemoveRally.Enabled = false;
             
-            
+        }
+
+        private List<System.Windows.Forms.Control> getCurrentRallyLabels() { 
+            if (this.matchData == null)
+                return null;
+
+
+            /*
+            lbl_number
+            lbl_shots
+            lbl_seconds
+            lbl_shotsSec
+            lbl_secAfter
+                */
+            int curGame = this.matchData.getCurrentGameNumber();
+            int curRall = this.matchData.getCurrentRallyNumber();
+            // curRall is 1 indexed, columns are 0 indexed, but col 0 has labels
+            // so we need to decrement curRall to get 0 indexed, but increment result
+            // so we don't overwrite the row labels
+            int curRallIndex = (curRall - 1) % RALLYS_PER_ROW + 1;
+
+            TableLayoutPanel currentTable;
+            switch (curGame)
+            {
+                case 1:
+                    this.gBox_game1.Visible = true;
+                    if (curRall <= RALLYS_PER_ROW)
+                    {
+                        currentTable = this.tbl_game1_a;
+                    }
+                    else if (curRall <= (2 * RALLYS_PER_ROW))
+                    {
+                        currentTable = this.tbl_game1_b;
+                    }
+                    else
+                    {
+                        currentTable = this.tbl_game1_c;
+                    }
+                    break;
+                case 2:
+                    this.gBox_game2.Visible = true;
+                    //pnl_games.ScrollControlIntoView(this.gBox_game2);
+                    if (curRall <= RALLYS_PER_ROW)
+                    {
+                        currentTable = this.tbl_game2_a;
+                    }
+                    else if (curRall <= (2 * RALLYS_PER_ROW))
+                    {
+                        currentTable = this.tbl_game2_b;
+                    }
+                    else
+                    {
+                        currentTable = this.tbl_game2_c;
+                    }
+                    break;
+                case 3:
+                    this.gBox_game3.Visible = true;
+                    //pnl_games.ScrollControlIntoView(this.gBox_game3);
+                    if (curRall <= RALLYS_PER_ROW)
+                    {
+                        currentTable = this.tbl_game3_a;
+                    }
+                    else if (curRall <= (2 * RALLYS_PER_ROW))
+                    {
+                        currentTable = this.tbl_game3_b;
+                    }
+                    else
+                    {
+                        currentTable = this.tbl_game3_c;
+                    }
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+
+            currentTable.Visible = true;
+            currentTable.Enabled = true;
+
+            System.Windows.Forms.Control lbl_number;
+            System.Windows.Forms.Control lbl_shots;
+            System.Windows.Forms.Control lbl_seconds;
+            System.Windows.Forms.Control lbl_shotsSec;
+            System.Windows.Forms.Control lbl_secAfter;
+
+
+
+            Console.Write("current game ");
+            Console.WriteLine(curGame);
+            Console.Write("current rally index (in row)");
+            Console.WriteLine(curRallIndex);
+
+            lbl_number = currentTable.GetControlFromPosition(curRallIndex, 0);
+            lbl_shots = currentTable.GetControlFromPosition(curRallIndex, 1);
+            lbl_seconds = currentTable.GetControlFromPosition(curRallIndex, 2);
+            lbl_shotsSec = currentTable.GetControlFromPosition(curRallIndex, 3);
+            lbl_secAfter = currentTable.GetControlFromPosition(curRallIndex, 4);
+
+            /*
+            List<System.Windows.Forms.Control> returning = new List<Control> { };
+            returning.Add(lbl_number);
+            returning.Add(lbl_shots);
+            returning.Add(lbl_seconds);
+            returning.Add(lbl_shotsSec);
+            returning.Add(lbl_secAfter);
+            //*/
+
+            List<System.Windows.Forms.Control> returning = new List<Control> {
+                lbl_number,
+                lbl_shots,
+                lbl_seconds,
+                lbl_shotsSec,
+                lbl_secAfter
+            };
+
+            return returning;
         }
 
         private void timer_updateRally_Tick(object sender, EventArgs e)
         {
-            if (this.matchData != null)
-            {
+            List<Control> labels = this.getCurrentRallyLabels();
 
-                /*
-                lbl_number
-                lbl_shots
-                lbl_seconds
-                lbl_shotsSec
-                lbl_secAfter
-                 */
-                int curGame = this.matchData.getCurrentGameNumber();
-                int curRall = this.matchData.getCurrentRallyNumber();
-                // curRall is 1 indexed, columns are 0 indexed, but col 0 has labels
-                // so we need to decrement curRall to get 0 indexed, but increment result
-                // so we don't overwrite the row labels
-                int curRallIndex = (curRall - 1) % RALLYS_PER_ROW + 1;
+            if (labels == null)
+                return;
 
-                TableLayoutPanel currentTable;
-                switch (curGame)
-                {
-                    case 1:
-                        this.gBox_game1.Visible = true;
-                        if (curRall <= RALLYS_PER_ROW)
-                        {
-                            currentTable = this.tbl_game1_a;
-                        }
-                        else if (curRall <= (2 * RALLYS_PER_ROW))
-                        {
-                            currentTable = this.tbl_game1_b;
-                        }
-                        else
-                        {
-                            currentTable = this.tbl_game1_c;
-                        }
-                        break;
-                    case 2:
-                        this.gBox_game2.Visible = true;
-                        //pnl_games.ScrollControlIntoView(this.gBox_game2);
-                        if (curRall <= RALLYS_PER_ROW)
-                        {
-                            currentTable = this.tbl_game2_a;
-                        }
-                        else if (curRall <= (2 * RALLYS_PER_ROW))
-                        {
-                            currentTable = this.tbl_game2_b;
-                        }
-                        else
-                        {
-                            currentTable = this.tbl_game2_c;
-                        }
-                        break;
-                    case 3:
-                        this.gBox_game3.Visible = true;
-                        //pnl_games.ScrollControlIntoView(this.gBox_game3);
-                        if (curRall <= RALLYS_PER_ROW)
-                        {
-                            currentTable = this.tbl_game3_a;
-                        }
-                        else if (curRall <= (2 * RALLYS_PER_ROW))
-                        {
-                            currentTable = this.tbl_game3_b;
-                        }
-                        else
-                        {
-                            currentTable = this.tbl_game3_c;
-                        }
-                        break;
-                    default:
-                        throw new NotImplementedException();
-                }
 
-                currentTable.Visible = true;
-                currentTable.Enabled = true;
+            System.Windows.Forms.Control lbl_number     = labels.ElementAt(0);
+            System.Windows.Forms.Control lbl_shots      = labels.ElementAt(1);
+            System.Windows.Forms.Control lbl_seconds    = labels.ElementAt(2);
+            System.Windows.Forms.Control lbl_shotsSec   = labels.ElementAt(3);
+            System.Windows.Forms.Control lbl_secAfter   = labels.ElementAt(4);
 
-                System.Windows.Forms.Control lbl_number;
-                System.Windows.Forms.Control lbl_shots;
-                System.Windows.Forms.Control lbl_seconds;
-                System.Windows.Forms.Control lbl_shotsSec;
-                System.Windows.Forms.Control lbl_secAfter;
+            int curRall = this.matchData.getCurrentRallyNumber();
 
-                
+            lbl_number.Visible = true;
+            lbl_shots.Visible = true;
+            lbl_seconds.Visible = true;
+            lbl_shotsSec.Visible = true;
+            lbl_secAfter.Visible = true;
 
-                Console.Write("current game ");
-                Console.WriteLine(curGame);
-                Console.Write("current rally index (in row)");
-                Console.WriteLine(curRallIndex);
+            lbl_number.Text = "" + curRall;
 
-                lbl_number = currentTable.GetControlFromPosition(curRallIndex, 0);
-                lbl_shots = currentTable.GetControlFromPosition(curRallIndex, 1);
-                lbl_seconds = currentTable.GetControlFromPosition(curRallIndex, 2);
-                lbl_shotsSec = currentTable.GetControlFromPosition(curRallIndex, 3);
-                lbl_secAfter = currentTable.GetControlFromPosition(curRallIndex, 4);
-                
+            this.matchData.updateRally(lbl_number, lbl_shots, lbl_seconds, lbl_shotsSec, lbl_secAfter);
+            lbl_number.Text = curRall.ToString();
 
-                lbl_number.Visible = true;
-                lbl_shots.Visible = true;
-                lbl_seconds.Visible = true;
-                lbl_shotsSec.Visible = true;
-                lbl_secAfter.Visible = true;
-
-                lbl_number.Text = "" + curRall;
-
-                this.matchData.updateRally(lbl_number, lbl_shots, lbl_seconds, lbl_shotsSec, lbl_secAfter);
-                lbl_number.Text = curRall.ToString();
-
-                this.matchData.updateMatchStats(
-                        this.lbl_winner,
-                        this.lbl_score,
-                        this.lbl_startTime,
-                        this.lbl_finishTime,
-                        this.lbl_games,
-                        this.lbl_shots,
-                        this.lbl_rallies,
-                        this.lbl_avgShotsRally,
-                        this.lbl_longestRally,
-                        this.lbl_timeShot,
-                        this.lbl_totalMatchTime,
-                        this.lbl_playTime,
-                        this.lbl_rallyBreakTime,
-                        this.lbl_avgRallyBreakTime,
-                        this.lbl_gameBreakTime,
-                        this.lbl_percentPlayTotalTime,
-                        this.lbl_matchIntensityValue,
-                        this.lbl_shotsPerRally_30Plus,
-                        this.lbl_shotsPerRally_20To29,
-                        this.lbl_shotsPerRally_10To19,
-                        this.lbl_shotsPerRally_5To9,
-                        this.lbl_shotsPerRally_1To4,
-                        this.lbl_longestRally_2,
-                        this.lbl_longestRally_3,
-                        this.lbl_longestRally_4
-                    );
-            }
+            this.matchData.updateMatchStats(
+                    this.lbl_winner,
+                    this.lbl_score,
+                    this.lbl_startTime,
+                    this.lbl_finishTime,
+                    this.lbl_games,
+                    this.lbl_shots,
+                    this.lbl_rallies,
+                    this.lbl_avgShotsRally,
+                    this.lbl_longestRally,
+                    this.lbl_timeShot,
+                    this.lbl_totalMatchTime,
+                    this.lbl_playTime,
+                    this.lbl_rallyBreakTime,
+                    this.lbl_avgRallyBreakTime,
+                    this.lbl_gameBreakTime,
+                    this.lbl_percentPlayTotalTime,
+                    this.lbl_matchIntensityValue,
+                    this.lbl_shotsPerRally_30Plus,
+                    this.lbl_shotsPerRally_20To29,
+                    this.lbl_shotsPerRally_10To19,
+                    this.lbl_shotsPerRally_5To9,
+                    this.lbl_shotsPerRally_1To4,
+                    this.lbl_longestRally_2,
+                    this.lbl_longestRally_3,
+                    this.lbl_longestRally_4
+                );
 
             // update immediately :)
             //this.timer_updateRally_Tick(this, null);
@@ -207,6 +241,7 @@ namespace WindowsFormsApplication1
             this.btn_pauseRally.Enabled = false;
             this.btn_AdjustMinus.Enabled = true;
             this.btn_AdjustPlus.Enabled = true;
+            this.btn_RemoveRally.Enabled = true;
 
             if (this.matchData.getCurrentRallyNumber() >= DEBUG_canEndGameAfterRallyNumber)
                 this.btn_EndGame.Enabled = true;
@@ -288,6 +323,7 @@ namespace WindowsFormsApplication1
         {
             this.matchData.endGame();
             this.btn_EndGame.Enabled = false;
+            this.btn_RemoveRally.Enabled = false;
             if (this.matchData.getCurrentGameNumber() > 2)
                 this.btn_EndMatch.Enabled = true;
             if (this.matchData.getCurrentGameNumber() == 3 && this.matchData.getCurrentRallyNumber() > 0)
@@ -352,6 +388,7 @@ namespace WindowsFormsApplication1
             this.btn_EndRally.Enabled = false;
             this.btn_AdjustMinus.Enabled = false;
             this.btn_AdjustPlus.Enabled = false;
+            this.btn_RemoveRally.Enabled = false;
             this.btn_EndGame.Enabled = false;
             this.btn_EndMatch.Enabled = false;
             // end all timers (unended rallies)
@@ -430,6 +467,29 @@ namespace WindowsFormsApplication1
                 this.btn_pauseRally.Text = resume;
                 this.btn_EndRally.Enabled = false; // TODO unhandled situation, need to write code to handle (pause, then end rally)
             }
+        }
+
+        private void btn_RemoveRally_Click(object sender, EventArgs e)
+        {
+            List<Control> labels = this.getCurrentRallyLabels();
+            
+            this.matchData.undoLastRally();
+
+            if (labels == null)
+                return;
+
+
+            System.Windows.Forms.Control lbl_number   = labels.ElementAt(0);
+            System.Windows.Forms.Control lbl_shots    = labels.ElementAt(1);
+            System.Windows.Forms.Control lbl_seconds  = labels.ElementAt(2);
+            System.Windows.Forms.Control lbl_shotsSec = labels.ElementAt(3);
+            System.Windows.Forms.Control lbl_secAfter = labels.ElementAt(4);
+
+            lbl_number.Visible = false;
+            lbl_shots.Visible = false;
+            lbl_seconds.Visible = false;
+            lbl_shotsSec.Visible = false;
+            lbl_secAfter.Visible = false;
         }
 
     }

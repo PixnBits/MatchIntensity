@@ -50,7 +50,7 @@ namespace WindowsFormsApplication1
 
         public Rally getCurrentRally()
         {
-            if (this.rallies == null)
+            if ((this.rallies == null) || (this.currentRally < 0))
                 return null;
 
             return this.rallies[this.currentRally];
@@ -260,6 +260,15 @@ namespace WindowsFormsApplication1
                 return;
 
             this.rallies[this.currentRally].resume();
+        }
+
+        internal void undoLastRally()
+        {
+            if (this.currentRally < 0)
+                return;
+
+            this.rallies[this.currentRally].reset();
+            this.currentRally--;
         }
     }
 }
