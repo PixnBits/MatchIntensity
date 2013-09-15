@@ -133,8 +133,13 @@ namespace WindowsFormsApplication1
                 ui_avgShotsRally.Text = "Avg. Shots/Rally: undef";
             }
             //ui_longestRally
-            float[] longestRallies = this.getLongestRallies();
-            ui_longestRally.Text = "Longest Rally: " + (longestRallies[0] / 1000).ToString("0.00");
+            List<Rally> longestRallies = this.getLongestRallies();
+            int[] longestRallies_shots = new int[4]; // filled with 0's
+            for (int i = 0; i < longestRallies.Count; i++)
+            {
+                longestRallies_shots[i] = longestRallies[i].getShots();
+            }
+            ui_longestRally.Text = "Longest Rally: " + longestRallies_shots[0].ToString();
             //ui_timeShot
             //ui_totalMatchTime
             ui_totalMatchTime.Text = "Total Match Time: " + (this.getTotalTime());// new DateTime
@@ -157,11 +162,11 @@ namespace WindowsFormsApplication1
             //ui_shotsPerRally_1to4
             ui_shotsPerRally_1To4.Text = "1-4: " + this.getShotsPerRally(1, 4);
             //ui_longestRally_2
-            ui_longestRally_2.Text = "2nd Longest: " + (longestRallies[1] / 1000).ToString("0.00");
+            ui_longestRally_2.Text = "2nd Longest: " + longestRallies_shots[1].ToString();
             //ui_longestRally_3
-            ui_longestRally_3.Text = "3rd Longest: " + (longestRallies[2] / 1000).ToString("0.00");
+            ui_longestRally_3.Text = "3rd Longest: " + longestRallies_shots[2].ToString();
             //ui_longestRally_4
-            ui_longestRally_4.Text = "4th Longest: " + (longestRallies[3] / 1000).ToString("0.00");
+            ui_longestRally_4.Text = "4th Longest: " + longestRallies_shots[3].ToString();
 
 
             //ui_winner
@@ -191,24 +196,27 @@ namespace WindowsFormsApplication1
             //ui_longestRally_4
         }
 
-        public float[] getLongestRallies()
+        public List<Rally> getLongestRallies()
         {
-            float[] longestRallies = new float[4];
+            List<Rally> rallyList = new List<Rally> { };
 
             for (int i = 0; i <= this.currentGame; i++)
             {
-                float[] longestRallies_game = this.games[i].getLongestRallies();
-                // http://stackoverflow.com/a/1547276
-                float[] both = new float[longestRallies.Length + longestRallies_game.Length];
-                longestRallies.CopyTo(both, 0);
-                longestRallies_game.CopyTo(both, longestRallies.Length);
-                Array.Sort(both);
-                Array.Reverse(both);
-                Array.Resize( ref both, 4);
-                both.CopyTo(longestRallies, 0);
+                rallyList.AddRange(this.games[i].getLongestRallies());
             }
 
-            return longestRallies;
+            rallyList = rallyList.OrderBy(o => o.getDuration()).Reverse().ToList();
+            if (rallyList.Count <= 4)
+            {
+                return rallyList;
+            }
+            
+            List<Rally> onlyFour = new List<Rally> { };
+            for (int i = 0; i < 4; i++)
+            {
+                onlyFour.Add(rallyList[i]);
+            }
+            return onlyFour;
         }
 
         public int getShotsPerRally(int lowerBound, int upperBound)

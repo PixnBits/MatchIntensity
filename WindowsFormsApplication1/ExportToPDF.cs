@@ -215,10 +215,10 @@ namespace MatchIntensityApplication
                 XStringFormats.TopLeft
             );
 
-            float[] longestRallies = matchData.getLongestRallies();
+            List<Rally> longestRallies = matchData.getLongestRallies();
             //Longest Rally:
             gfx.DrawString(
-                "Longest Rally: " + (longestRallies[0]/(float)1000).ToString("0.00"),
+                "Longest Rally: " + (longestRallies[0].getShots()/(float)1000).ToString("0.00"),
                 font_summaryFields,
                 XBrushes.Black,
                 new XRect(570, 129, 75, 10),
@@ -335,7 +335,7 @@ namespace MatchIntensityApplication
 
             //2nd Longest
             gfx.DrawString(
-                "2nd Longest: " + (longestRallies[1] / (float)1000).ToString("0.00"),
+                "2nd Longest: " + (longestRallies[1].getShots() / (float)1000).ToString("0.00"),
                 font_summaryFields,
                 XBrushes.Black,
                 new XRect(490, 167, 150, 10),
@@ -344,7 +344,7 @@ namespace MatchIntensityApplication
 
             //3rd Longest
             gfx.DrawString(
-                "3rd Longest: " + (longestRallies[2] / (float)1000).ToString("0.00"),
+                "3rd Longest: " + (longestRallies[2].getShots() / (float)1000).ToString("0.00"),
                 font_summaryFields,
                 XBrushes.Black,
                 new XRect(585, 167, 150, 10),
@@ -353,7 +353,7 @@ namespace MatchIntensityApplication
 
             //4th Longest
             gfx.DrawString(
-                "4th Longest: " + (longestRallies[3] / (float)1000).ToString("0.00"),
+                "4th Longest: " + (longestRallies[3].getShots() / (float)1000).ToString("0.00"),
                 font_summaryFields,
                 XBrushes.Black,
                 new XRect(680, 167, 150, 10),

@@ -156,19 +156,27 @@ namespace WindowsFormsApplication1
             return sum;
         }
 
-        internal float[] getLongestRallies()
+        internal List<Rally> getLongestRallies()
         {
-            float[] rallyList = new float[this.currentRally + 1];
-            for (int i = 0; i <= this.currentRally; i++)
+            List<Rally> rallyList = new List<Rally> { };
+            for (int i = 0; i < this.currentRally; i++)
             {
-                rallyList[i] = this.rallies[i].getDuration();
+                rallyList.Add(this.rallies[i]);
             }
 
-            Array.Sort(rallyList);
-            Array.Reverse(rallyList);
-            Array.Resize(ref rallyList, 4);
+            rallyList = rallyList.OrderBy(o => o.getDuration()).Reverse().ToList();
 
-            return rallyList;
+            if (rallyList.Count <= 4)
+            {
+                return rallyList;
+            }
+            
+            List<Rally> onlyFour = new List<Rally> {};
+            for (int i = 0; i < 4; i++) {
+                onlyFour.Add(rallyList[i]);
+            }
+            return onlyFour;
+
         }
 
         internal void end()
