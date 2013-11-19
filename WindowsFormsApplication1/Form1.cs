@@ -19,6 +19,8 @@ namespace WindowsFormsApplication1
         private const int DEBUG_canEndGameAfterRallyNumber = 2;//21;
         //private DateTime formStarted;
 
+        MatchIntensityActionsServer actionsServer;
+
         public frm_matchIntensity()
         {
             InitializeComponent();
@@ -28,6 +30,10 @@ namespace WindowsFormsApplication1
             lbl_date.Text = "Date: " + matchData.data_date.Date.ToShortDateString();
 
             this.editInfoToolStripMenuItem_Click(this, null);
+
+            actionsServer = new MatchIntensityActionsServer();
+            actionsServer.connectToMatch(this.matchData);
+            actionsServer.start();
         }
 
         private void btn_startRally_Click(object sender, EventArgs e)
@@ -133,11 +139,12 @@ namespace WindowsFormsApplication1
             System.Windows.Forms.Control lbl_secAfter;
 
 
-
+            /*
             Console.Write("current game ");
             Console.WriteLine(curGame);
             Console.Write("current rally index (in row)");
             Console.WriteLine(curRallIndex);
+            //*/
 
             lbl_number = currentTable.GetControlFromPosition(curRallIndex, 0);
             lbl_shots = currentTable.GetControlFromPosition(curRallIndex, 1);
