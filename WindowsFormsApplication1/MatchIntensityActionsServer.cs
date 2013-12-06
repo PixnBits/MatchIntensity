@@ -92,5 +92,13 @@ namespace MatchIntensityApplication
         {
             matchData = match;
         }
+
+        internal void end()
+        {
+            if (null != commServer)
+            {
+                commServer.IpcServerStop();
+            }
+        }
     }
 }

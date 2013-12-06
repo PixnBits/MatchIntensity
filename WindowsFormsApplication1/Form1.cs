@@ -499,5 +499,10 @@ namespace WindowsFormsApplication1
             lbl_secAfter.Visible = false;
         }
 
+        private void frm_matchIntensity_Closing(object sender, FormClosingEventArgs e)
+        {
+            actionsServer.end();
+        }
+
     }
 }

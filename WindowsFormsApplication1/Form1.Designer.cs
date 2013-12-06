@@ -12045,6 +12045,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "frm_matchIntensity";
             this.Text = "Match Intensity";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frm_matchIntensity_Closing);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.gBox_game1.ResumeLayout(false);
             this.gBox_game1.PerformLayout();
